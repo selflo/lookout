@@ -92,6 +92,12 @@
       settingsToggle.setAttribute("aria-expanded", String(!hidden));
     });
 
+    document.addEventListener("pointerdown", (e) => {
+      if (settingsPanel.classList.contains("hidden")) return;
+      if (settingsPanel.contains(e.target) || settingsToggle.contains(e.target)) return;
+      hideSettings();
+    });
+
     document.addEventListener("visibilitychange", async () => {
       if (document.visibilityState === "visible" && state.running && state.wakelock) {
         await acquireWakeLock();
