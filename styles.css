@@ -85,12 +85,44 @@ html, body {
   pointer-events: none;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  filter: drop-shadow(0 2px 8px rgba(74, 222, 128, 0.25));
+}
+.brand-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .settings h1 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  background: linear-gradient(135deg, #4ade80 0%, #a7f3d0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: var(--accent);
+}
+.brand-bang {
+  -webkit-text-fill-color: #facc15;
+  color: #facc15;
+}
+.brand-tag {
+  margin: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }

@@ -47,33 +47,44 @@
       state.mode = modeSel.value;
       state.lastValue = null;
       saveSettings();
-      if (state.running) { tick(); restartTimer(); }
+      if (state.running) stop();
     });
 
     intervalInput.addEventListener("input", () => {
       state.interval = parseFloat(intervalInput.value);
       intervalLabel.value = `${state.interval.toFixed(1)}s`;
-      saveSettings();
-      if (state.running) restartTimer();
     });
 
-    soundInput.addEventListener("change", () => { state.sound = soundInput.checked; saveSettings(); });
+    intervalInput.addEventListener("change", () => {
+      state.interval = parseFloat(intervalInput.value);
+      intervalLabel.value = `${state.interval.toFixed(1)}s`;
+      saveSettings();
+      if (state.running) stop();
+    });
 
-    wakelockInput.addEventListener("change", async () => {
+    soundInput.addEventListener("change", () => {
+      state.sound = soundInput.checked;
+      saveSettings();
+      if (state.running) stop();
+    });
+
+    wakelockInput.addEventListener("change", () => {
       state.wakelock = wakelockInput.checked;
       saveSettings();
-      if (state.running) state.wakelock ? await acquireWakeLock() : await releaseWakeLock();
+      if (state.running) stop();
     });
 
     playPause.addEventListener("click", () => {
       if (state.running) { stop(); return; }
       primeAudio(); // must run synchronously in the user gesture for iOS
+      enterFullscreen();
       start();
     });
 
     fullscreenBtn.addEventListener("click", () => {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
       else document.exitFullscreen?.();
+      hideSettings();
     });
 
     settingsToggle.addEventListener("click", () => {
@@ -101,9 +112,18 @@
     if (state.wakelock) await acquireWakeLock();
     tick();
     restartTimer();
-    // auto-hide the settings panel so the display is clean
+    hideSettings();
+  }
+
+  function hideSettings() {
     settingsPanel.classList.add("hidden");
     settingsToggle.setAttribute("aria-expanded", "false");
+  }
+
+  function enterFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    }
   }
 
   async function stop() {
