@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#111" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Lookout" />
+  <title>Lookout — Soccer Scan Trainer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="stage" class="stage" aria-live="polite">
+    <div id="display" class="display"></div>
+  </main>
+
+  <button id="toggleSettings" class="settings-toggle" aria-label="Toggle settings" aria-expanded="true">
+    <span class="gear" aria-hidden="true">&#9881;</span>
+  </button>
+
+  <aside id="settings" class="settings" aria-label="Settings">
+    <h1>Lookout</h1>
+
+    <label class="field">
+      <span>Mode</span>
+      <select id="mode">
+        <option value="colors">Colors</option>
+        <option value="numbers">Numbers</option>
+        <option value="math">Math</option>
+        <option value="mixed">Mixed</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Interval <output id="intervalLabel">4.0s</output></span>
+      <input id="interval" type="range" min="1" max="10" step="0.5" value="4" />
+    </label>
+
+    <label class="checkbox">
+      <input id="sound" type="checkbox" checked />
+      <span>Beep on change</span>
+    </label>
+
+    <label class="checkbox">
+      <input id="wakelock" type="checkbox" checked />
+      <span>Keep screen on</span>
+    </label>
+
+    <div class="controls">
+      <button id="playPause" class="primary">Start</button>
+      <button id="fullscreen">Fullscreen</button>
+    </div>
+
+    <p class="hint">Glance over your shoulder when you hear the beep, call out what you see, then play.</p>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
