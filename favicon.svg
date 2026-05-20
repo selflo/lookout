@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0b1f14"/>
+
+  <!-- Almond eye in the app's accent green -->
+  <path d="M5 32 C 15 11, 49 11, 59 32 C 49 53, 15 53, 5 32 Z"
+        fill="#4ade80" stroke="#0b1f14" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Iris = soccer ball -->
+  <g transform="translate(32 32)">
+    <circle r="13" fill="#ffffff" stroke="#0b1f14" stroke-width="1.5"/>
+
+    <!-- Central black pentagon (circumradius 5) -->
+    <polygon points="0,-5 4.76,-1.55 2.94,4.05 -2.94,4.05 -4.76,-1.55"
+             fill="#0b1f14"/>
+
+    <!-- Stitching: radial lines from each pentagon vertex to the ball's edge -->
+    <g stroke="#0b1f14" stroke-width="1.6" stroke-linecap="round">
+      <line x1="0"     y1="-5"    x2="0"      y2="-12"/>
+      <line x1="4.76"  y1="-1.55" x2="11.41"  y2="-3.71"/>
+      <line x1="2.94"  y1="4.05"  x2="7.05"   y2="9.71"/>
+      <line x1="-2.94" y1="4.05"  x2="-7.05"  y2="9.71"/>
+      <line x1="-4.76" y1="-1.55" x2="-11.41" y2="-3.71"/>
+    </g>
+  </g>
+</svg>
