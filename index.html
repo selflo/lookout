@@ -19,31 +19,27 @@
   </main>
 
   <button id="toggleSettings" class="settings-toggle" aria-label="Toggle settings" aria-expanded="true">
-    <span class="gear" aria-hidden="true">&#9881;</span>
+    <svg class="toggle-icon" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M5 32 C 15 11, 49 11, 59 32 C 49 53, 15 53, 5 32 Z"
+            fill="#4ade80" stroke="#0b1f14" stroke-width="1.5" stroke-linejoin="round"/>
+      <g transform="translate(32 32)">
+        <circle r="13" fill="#ffffff" stroke="#0b1f14" stroke-width="1.5"/>
+        <polygon points="0,-5 4.76,-1.55 2.94,4.05 -2.94,4.05 -4.76,-1.55" fill="#0b1f14"/>
+        <g stroke="#0b1f14" stroke-width="1.6" stroke-linecap="round">
+          <line x1="0"     y1="-5"    x2="0"      y2="-12"/>
+          <line x1="4.76"  y1="-1.55" x2="11.41"  y2="-3.71"/>
+          <line x1="2.94"  y1="4.05"  x2="7.05"   y2="9.71"/>
+          <line x1="-2.94" y1="4.05"  x2="-7.05"  y2="9.71"/>
+          <line x1="-4.76" y1="-1.55" x2="-11.41" y2="-3.71"/>
+        </g>
+      </g>
+    </svg>
   </button>
 
   <aside id="settings" class="settings" aria-label="Settings">
     <header class="brand">
-      <svg class="brand-icon" viewBox="0 0 64 64" aria-hidden="true">
-        <rect width="64" height="64" rx="14" fill="#0b1f14"/>
-        <path d="M5 32 C 15 11, 49 11, 59 32 C 49 53, 15 53, 5 32 Z"
-              fill="#4ade80" stroke="#0b1f14" stroke-width="1.5" stroke-linejoin="round"/>
-        <g transform="translate(32 32)">
-          <circle r="13" fill="#ffffff" stroke="#0b1f14" stroke-width="1.5"/>
-          <polygon points="0,-5 4.76,-1.55 2.94,4.05 -2.94,4.05 -4.76,-1.55" fill="#0b1f14"/>
-          <g stroke="#0b1f14" stroke-width="1.6" stroke-linecap="round">
-            <line x1="0"     y1="-5"    x2="0"      y2="-12"/>
-            <line x1="4.76"  y1="-1.55" x2="11.41"  y2="-3.71"/>
-            <line x1="2.94"  y1="4.05"  x2="7.05"   y2="9.71"/>
-            <line x1="-2.94" y1="4.05"  x2="-7.05"  y2="9.71"/>
-            <line x1="-4.76" y1="-1.55" x2="-11.41" y2="-3.71"/>
-          </g>
-        </g>
-      </svg>
-      <div class="brand-text">
-        <h1>Lookout<span class="brand-bang">!</span></h1>
-        <p class="brand-tag">Scan trainer</p>
-      </div>
+      <h1>Lookout<span class="brand-bang">!</span></h1>
+      <p class="brand-tag">Scan trainer</p>
     </header>
 
     <label class="field">
