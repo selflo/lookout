@@ -140,7 +140,6 @@
     playPause.classList.add("primary");
     clearInterval(state.timer);
     state.timer = null;
-    screen.orientation?.unlock?.();
     await releaseWakeLock();
   }
 
