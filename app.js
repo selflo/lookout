@@ -210,8 +210,8 @@
     const textW = display.scrollWidth;
     const textH = display.scrollHeight;
     if (!textW || !textH) return;
-    const maxW = stage.clientWidth * 0.9;
-    const maxH = stage.clientHeight * 0.75;
+    const maxW = stage.clientWidth * 0.95;
+    const maxH = stage.clientHeight * 0.9;
     const scale = Math.min(maxW / textW, maxH / textH);
     display.style.fontSize = Math.floor(100 * scale) + "px";
   }
