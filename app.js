@@ -128,7 +128,9 @@
 
   function enterFullscreen() {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen?.().catch(() => {});
+      document.documentElement.requestFullscreen?.()
+        .then(() => screen.orientation?.lock?.("landscape").catch(() => {}))
+        .catch(() => {});
     }
   }
 
@@ -138,6 +140,7 @@
     playPause.classList.add("primary");
     clearInterval(state.timer);
     state.timer = null;
+    screen.orientation?.unlock?.();
     await releaseWakeLock();
   }
 
@@ -198,7 +201,20 @@
     } else {
       stage.style.background = "";
       display.textContent = value.text;
+      autoFitDisplay();
     }
+  }
+
+  function autoFitDisplay() {
+    // Measure text at a reference size, then scale to fill the viewport
+    display.style.fontSize = "100px";
+    const textW = display.scrollWidth;
+    const textH = display.scrollHeight;
+    if (!textW || !textH) return;
+    const maxW = stage.clientWidth * 0.9;
+    const maxH = stage.clientHeight * 0.75;
+    const scale = Math.min(maxW / textW, maxH / textH);
+    display.style.fontSize = Math.floor(100 * scale) + "px";
   }
 
   // --- audio cue ---

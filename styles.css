@@ -33,12 +33,12 @@ html, body {
 
 .display {
   font-weight: 800;
-  font-size: clamp(8rem, 35vmin, 30rem);
   line-height: 1;
   text-align: center;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
 }
 
 /* Color-mode: fill the screen with the color, hide any text. */
