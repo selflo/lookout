@@ -108,7 +108,9 @@
     });
 
     document.addEventListener("fullscreenchange", () => {
-      if (!document.fullscreenElement) screen.orientation?.unlock?.();
+      if (document.fullscreenElement) return;
+      screen.orientation?.unlock?.();
+      if (state.running) stop();
     });
 
     document.addEventListener("keydown", (e) => {
