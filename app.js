@@ -11,7 +11,6 @@
   const wakelockInput = $("wakelock");
   const wakeLockStatus = $("wakeLockStatus");
   const playPause = $("playPause");
-  const fullscreenBtn = $("fullscreen");
   const settingsPanel = $("settings");
   const settingsToggle = $("toggleSettings");
 
@@ -79,14 +78,7 @@
     playPause.addEventListener("click", () => {
       if (state.running) { stop(); return; }
       primeAudio(); // must run synchronously in the user gesture for iOS
-      enterFullscreen();
       start();
-    });
-
-    fullscreenBtn.addEventListener("click", async () => {
-      if (!document.fullscreenElement) enterFullscreen();
-      else await exitFullscreen();
-      hideSettings();
     });
 
     settingsToggle.addEventListener("click", async () => {
@@ -122,11 +114,11 @@
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
       if (e.code === "Space") { e.preventDefault(); state.running ? stop() : start(); }
-      if (e.key === "f" || e.key === "F") fullscreenBtn.click();
     });
   }
 
   async function start() {
+    enterFullscreen();
     state.running = true;
     wakeLockRetryDelay = 1000;
     playPause.textContent = "Stop";

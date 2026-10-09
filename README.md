@@ -32,7 +32,9 @@ The clock never stops. Miss a cue, you miss the rep.
 - **Beep on change** — audible cue so you can train without watching the screen continuously
 - **Keep screen on** — uses the Screen Wake Lock API so the phone won't sleep mid-session
 
-Shortcuts: `Space` toggles start/stop, `F` toggles fullscreen.
+Starting a session enters fullscreen automatically. Press the floating soccer-eye button to stop the session, exit fullscreen, and reopen settings.
+
+Shortcut: `Space` toggles start/stop.
 
 ## Drill ideas
 
