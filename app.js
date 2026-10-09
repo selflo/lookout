@@ -83,9 +83,9 @@
       start();
     });
 
-    fullscreenBtn.addEventListener("click", () => {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-      else document.exitFullscreen?.();
+    fullscreenBtn.addEventListener("click", async () => {
+      if (!document.fullscreenElement) enterFullscreen();
+      else await exitFullscreen();
       hideSettings();
     });
 
@@ -105,6 +105,10 @@
         wakeLockRetryDelay = 1000;
         await acquireWakeLock();
       }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) screen.orientation?.unlock?.();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -138,6 +142,12 @@
     }
   }
 
+  async function exitFullscreen() {
+    screen.orientation?.unlock?.();
+    if (!document.fullscreenElement) return;
+    try { await document.exitFullscreen?.(); } catch {}
+  }
+
   async function stop() {
     state.running = false;
     playPause.textContent = "Start";
@@ -146,6 +156,7 @@
     state.timer = null;
     clearWakeLockTimers();
     await releaseWakeLock();
+    await exitFullscreen();
     setWakeLockStatus("");
   }
 
