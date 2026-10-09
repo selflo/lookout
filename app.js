@@ -1,5 +1,5 @@
 (() => {
-  const COLORS = ["white", "black", "green", "yellow", "red"];
+  const COLORS = ["white", "green", "yellow", "red"];
 
   const $ = (id) => document.getElementById(id);
   const stage = $("stage");
@@ -9,6 +9,7 @@
   const intervalLabel = $("intervalLabel");
   const soundInput = $("sound");
   const wakelockInput = $("wakelock");
+  const wakeLockStatus = $("wakeLockStatus");
   const playPause = $("playPause");
   const fullscreenBtn = $("fullscreen");
   const settingsPanel = $("settings");
@@ -72,6 +73,7 @@
       state.wakelock = wakelockInput.checked;
       saveSettings();
       if (state.running) stop();
+      else setWakeLockStatus("");
     });
 
     playPause.addEventListener("click", () => {
@@ -100,6 +102,7 @@
 
     document.addEventListener("visibilitychange", async () => {
       if (document.visibilityState === "visible" && state.running && state.wakelock) {
+        wakeLockRetryDelay = 1000;
         await acquireWakeLock();
       }
     });
@@ -113,6 +116,7 @@
 
   async function start() {
     state.running = true;
+    wakeLockRetryDelay = 1000;
     playPause.textContent = "Stop";
     playPause.classList.remove("primary");
     if (state.wakelock) await acquireWakeLock();
@@ -140,7 +144,9 @@
     playPause.classList.add("primary");
     clearInterval(state.timer);
     state.timer = null;
+    clearWakeLockTimers();
     await releaseWakeLock();
+    setWakeLockStatus("");
   }
 
   function restartTimer() {
@@ -192,7 +198,7 @@
   function render(mode, value) {
     stage.classList.remove(
       "color-mode",
-      "bg-white", "bg-black", "bg-green", "bg-yellow", "bg-red"
+      "bg-white", "bg-green", "bg-yellow", "bg-red"
     );
     if (value.kind === "color") {
       stage.classList.add("color-mode", `bg-${value.color}`);
@@ -243,13 +249,75 @@
   }
 
   // --- screen wake lock ---
+  let wakeLockRequest = null;
+  let wakeLockRetryTimer = null;
+  let wakeLockStableTimer = null;
+  let wakeLockRetryDelay = 1000;
+
   async function acquireWakeLock() {
-    if (!("wakeLock" in navigator)) return;
-    try {
-      state.wakeLock = await navigator.wakeLock.request("screen");
-      state.wakeLock.addEventListener("release", () => { state.wakeLock = null; });
-    } catch {}
+    if (!state.running || !state.wakelock || document.visibilityState !== "visible") return;
+    if (!("wakeLock" in navigator)) {
+      setWakeLockStatus("Screen wake lock is not supported by this browser.", true);
+      return;
+    }
+    if (state.wakeLock && !state.wakeLock.released) return;
+    if (wakeLockRequest) return wakeLockRequest;
+
+    wakeLockRequest = (async () => {
+      try {
+        const lock = await navigator.wakeLock.request("screen");
+        if (!state.running || !state.wakelock || document.visibilityState !== "visible") {
+          await lock.release();
+          return;
+        }
+
+        state.wakeLock = lock;
+        setWakeLockStatus("Screen will stay on.");
+        clearTimeout(wakeLockStableTimer);
+        wakeLockStableTimer = setTimeout(() => { wakeLockRetryDelay = 1000; }, 30000);
+
+        lock.addEventListener("release", () => {
+          if (state.wakeLock !== lock) return;
+          state.wakeLock = null;
+          clearTimeout(wakeLockStableTimer);
+          if (state.running && state.wakelock && document.visibilityState === "visible") {
+            setWakeLockStatus("Wake lock was released; retrying...", true);
+            scheduleWakeLockRetry();
+          }
+        });
+      } catch (error) {
+        console.warn("Unable to acquire screen wake lock:", error);
+        setWakeLockStatus("Chrome or Android denied the screen wake lock.", true);
+      } finally {
+        wakeLockRequest = null;
+      }
+    })();
+
+    return wakeLockRequest;
   }
+
+  function scheduleWakeLockRetry() {
+    clearTimeout(wakeLockRetryTimer);
+    wakeLockRetryTimer = setTimeout(() => {
+      wakeLockRetryTimer = null;
+      acquireWakeLock();
+    }, wakeLockRetryDelay);
+    wakeLockRetryDelay = Math.min(wakeLockRetryDelay * 2, 30000);
+  }
+
+  function clearWakeLockTimers() {
+    clearTimeout(wakeLockRetryTimer);
+    clearTimeout(wakeLockStableTimer);
+    wakeLockRetryTimer = null;
+    wakeLockStableTimer = null;
+  }
+
+  function setWakeLockStatus(message, isError = false) {
+    wakeLockStatus.textContent = message;
+    wakeLockStatus.hidden = !message;
+    wakeLockStatus.classList.toggle("error", isError);
+  }
+
   async function releaseWakeLock() {
     try { await state.wakeLock?.release(); } catch {}
     state.wakeLock = null;

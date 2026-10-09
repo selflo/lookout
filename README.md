@@ -21,7 +21,7 @@ The clock never stops. Miss a cue, you miss the rep.
 
 | Mode | What it shows | What it trains |
 |---|---|---|
-| **Colors** | The whole screen flashes one of: white, black, green, yellow, red | Pre-receive scanning under chromatic stress |
+| **Colors** | The whole screen flashes one of: white, green, yellow, red | Pre-receive scanning under chromatic stress |
 | **Numbers** | A single digit, 1–10 | Quick visual identification |
 | **Math** | A simple equation (e.g. `7 + 2`, `8 − 3`), results stay 0–10 | Cognitive load while scanning — forces a working-memory task on top of the visual one |
 | **Mixed** | Randomly picks one of the three each cue | Highest pressure: you don't know what's coming |

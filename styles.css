@@ -145,6 +145,14 @@ input[type="range"] { padding: 0; accent-color: var(--accent); }
 }
 .checkbox input { accent-color: var(--accent); width: 18px; height: 18px; }
 
+.wake-lock-status {
+  margin: -8px 0 0 26px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.wake-lock-status.error { color: #fca5a5; }
+
 .controls { display: flex; gap: 8px; margin-top: 4px; }
 .controls button {
   flex: 1;
@@ -164,7 +172,6 @@ input[type="range"] { padding: 0; accent-color: var(--accent); }
 
 /* Color backgrounds + auto-contrast text for non-color modes layered on top. */
 .stage.bg-white   { background: #ffffff; }
-.stage.bg-black   { background: #000000; }
 .stage.bg-green   { background: #16a34a; }
 .stage.bg-yellow  { background: #facc15; }
 .stage.bg-red     { background: #dc2626; }
