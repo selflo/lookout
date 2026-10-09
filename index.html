@@ -11,7 +11,7 @@
   <title>Lookout — Soccer Scan Trainer</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="favicon.svg" />
-  <link rel="stylesheet" href="styles.css?v=1.1.2" />
+  <link rel="stylesheet" href="styles.css?v=1.2.0" />
 </head>
 <body>
   <main id="stage" class="stage" aria-live="polite">
@@ -23,14 +23,16 @@
       <path d="M5 32 C 15 11, 49 11, 59 32 C 49 53, 15 53, 5 32 Z"
             fill="#4ade80" stroke="#0b1f14" stroke-width="1.5" stroke-linejoin="round"/>
       <g transform="translate(32 32)">
-        <circle r="13" fill="#ffffff" stroke="#0b1f14" stroke-width="1.5"/>
-        <polygon points="0,-5 4.76,-1.55 2.94,4.05 -2.94,4.05 -4.76,-1.55" fill="#0b1f14"/>
-        <g stroke="#0b1f14" stroke-width="1.6" stroke-linecap="round">
-          <line x1="0"     y1="-5"    x2="0"      y2="-12"/>
-          <line x1="4.76"  y1="-1.55" x2="11.41"  y2="-3.71"/>
-          <line x1="2.94"  y1="4.05"  x2="7.05"   y2="9.71"/>
-          <line x1="-2.94" y1="4.05"  x2="-7.05"  y2="9.71"/>
-          <line x1="-4.76" y1="-1.55" x2="-11.41" y2="-3.71"/>
+        <g class="eye-ball">
+          <circle r="13" fill="#ffffff" stroke="#0b1f14" stroke-width="1.5"/>
+          <polygon points="0,-5 4.76,-1.55 2.94,4.05 -2.94,4.05 -4.76,-1.55" fill="#0b1f14"/>
+          <g stroke="#0b1f14" stroke-width="1.6" stroke-linecap="round">
+            <line x1="0"     y1="-5"    x2="0"      y2="-12"/>
+            <line x1="4.76"  y1="-1.55" x2="11.41"  y2="-3.71"/>
+            <line x1="2.94"  y1="4.05"  x2="7.05"   y2="9.71"/>
+            <line x1="-2.94" y1="4.05"  x2="-7.05"  y2="9.71"/>
+            <line x1="-4.76" y1="-1.55" x2="-11.41" y2="-3.71"/>
+          </g>
         </g>
       </g>
     </svg>
@@ -73,9 +75,9 @@
     </div>
 
     <p class="hint">Glance over your shoulder when you hear the beep, call out what you see, then play.</p>
-    <p class="version">Version 1.1.2</p>
+    <p class="version">Version 1.2.0</p>
   </aside>
 
-  <script src="app.js?v=1.1.2"></script>
+  <script src="app.js?v=1.2.0"></script>
 </body>
 </html>

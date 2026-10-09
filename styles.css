@@ -67,6 +67,16 @@ html, body {
   display: block;
   filter: drop-shadow(0 2px 10px rgba(74, 222, 128, 0.3));
 }
+.eye-ball {
+  animation: eye-look 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes eye-look {
+  0%, 12%, 44%, 100% { transform: translateX(0); }
+  20%, 34% { transform: translateX(-6px); }
+  56%, 72% { transform: translateX(6px); }
+}
 
 .settings {
   position: fixed;
@@ -74,7 +84,7 @@ html, body {
   right: max(12px, env(safe-area-inset-right));
   z-index: 10;
   width: min(320px, calc(100vw - 24px));
-  padding: 64px 18px 18px;
+  padding: 22px 18px 18px;
   border-radius: 16px;
   background: var(--panel);
   border: 1px solid var(--border);
@@ -94,15 +104,17 @@ html, body {
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-bottom: 12px;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0 16px;
   border-bottom: 1px solid var(--border);
+  text-align: center;
 }
 .settings h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.04em;
   line-height: 1;
   background: linear-gradient(135deg, #4ade80 0%, #a7f3d0 100%);
   -webkit-background-clip: text;
@@ -116,9 +128,9 @@ html, body {
 }
 .brand-tag {
   margin: 0;
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.24em;
   color: var(--muted);
   font-weight: 600;
 }
@@ -180,3 +192,7 @@ input[type="range"] { padding: 0; accent-color: var(--accent); }
 
 .stage.bg-white  .display { color: #111; text-shadow: none; }
 .stage.bg-yellow .display { color: #111; text-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eye-ball { animation: none; }
+}
