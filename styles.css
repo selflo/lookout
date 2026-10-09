@@ -60,6 +60,7 @@ html, body {
   place-items: center;
 }
 .settings-toggle:active { transform: scale(0.95); }
+.settings-toggle.hidden { display: none; }
 .toggle-icon {
   width: 52px;
   height: 52px;

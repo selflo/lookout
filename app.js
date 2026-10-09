@@ -81,21 +81,8 @@
       start();
     });
 
-    settingsToggle.addEventListener("click", async () => {
-      if (state.running) {
-        await stop();
-        settingsPanel.classList.remove("hidden");
-        settingsToggle.setAttribute("aria-expanded", "true");
-        return;
-      }
-      const hidden = settingsPanel.classList.toggle("hidden");
-      settingsToggle.setAttribute("aria-expanded", String(!hidden));
-    });
-
-    document.addEventListener("pointerdown", (e) => {
-      if (settingsPanel.classList.contains("hidden")) return;
-      if (settingsPanel.contains(e.target) || settingsToggle.contains(e.target)) return;
-      hideSettings();
+    settingsToggle.addEventListener("click", () => {
+      if (state.running) stop();
     });
 
     document.addEventListener("visibilitychange", async () => {
@@ -123,16 +110,23 @@
     wakeLockRetryDelay = 1000;
     playPause.textContent = "Stop";
     playPause.classList.remove("primary");
-    settingsToggle.setAttribute("aria-label", "Stop session and open settings");
+    hideSettings();
     if (state.wakelock) await acquireWakeLock();
+    if (!state.running) return;
     tick();
     restartTimer();
-    hideSettings();
   }
 
   function hideSettings() {
     settingsPanel.classList.add("hidden");
+    settingsToggle.classList.remove("hidden");
     settingsToggle.setAttribute("aria-expanded", "false");
+  }
+
+  function showSettings() {
+    settingsPanel.classList.remove("hidden");
+    settingsToggle.classList.add("hidden");
+    settingsToggle.setAttribute("aria-expanded", "true");
   }
 
   function enterFullscreen() {
@@ -153,13 +147,13 @@
     state.running = false;
     playPause.textContent = "Start";
     playPause.classList.add("primary");
-    settingsToggle.setAttribute("aria-label", "Toggle settings");
     clearInterval(state.timer);
     state.timer = null;
     clearWakeLockTimers();
     await releaseWakeLock();
     await exitFullscreen();
     setWakeLockStatus("");
+    showSettings();
   }
 
   function restartTimer() {
