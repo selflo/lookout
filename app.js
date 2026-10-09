@@ -89,7 +89,13 @@
       hideSettings();
     });
 
-    settingsToggle.addEventListener("click", () => {
+    settingsToggle.addEventListener("click", async () => {
+      if (state.running) {
+        await stop();
+        settingsPanel.classList.remove("hidden");
+        settingsToggle.setAttribute("aria-expanded", "true");
+        return;
+      }
       const hidden = settingsPanel.classList.toggle("hidden");
       settingsToggle.setAttribute("aria-expanded", String(!hidden));
     });
@@ -125,6 +131,7 @@
     wakeLockRetryDelay = 1000;
     playPause.textContent = "Stop";
     playPause.classList.remove("primary");
+    settingsToggle.setAttribute("aria-label", "Stop session and open settings");
     if (state.wakelock) await acquireWakeLock();
     tick();
     restartTimer();
@@ -154,6 +161,7 @@
     state.running = false;
     playPause.textContent = "Start";
     playPause.classList.add("primary");
+    settingsToggle.setAttribute("aria-label", "Toggle settings");
     clearInterval(state.timer);
     state.timer = null;
     clearWakeLockTimers();
